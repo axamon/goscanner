@@ -19,3 +19,11 @@ Per segnalare problemi o richiedere nuove implementazioni è possibile [aprire d
 ## Eseguibili
 
 Gli eseguibili precompilati per windows linux e mac sono disponibili [qui](https://scm.code.telecomitalia.it/00246506/goscanner/tree/master/eseguibili)
+
+## Test coverage
+
+    go test -cover
+    2020/03/16 14:12:44 Connected on localhost:1123
+    PASS
+    coverage: 100.0% of statements
+    ok      goscanner       1.863s
