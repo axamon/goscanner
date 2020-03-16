@@ -1,5 +1,5 @@
 @echo off
-set ver=v0.1.1
+set ver=v0.1.2
 set GOOS=linux
 go build -ldflags="-n -s -X 'main.Version=%ver%'" -o eseguibili\
 
