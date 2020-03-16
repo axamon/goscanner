@@ -1,3 +1,7 @@
+// Copyright 2019 Alberto Bregliano. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
 package main
 
 import (
@@ -6,10 +10,12 @@ import (
 	"log"
 	"net"
 	"os"
+	"strconv"
 	"sync"
 	"time"
 )
 
+// Version of the app will be updated via -ldflags at build time.
 var Version = "Development"
 
 var wg sync.WaitGroup
@@ -34,6 +40,12 @@ func main() {
 	for _, port := range ports {
 		wg.Add(1)
 		time.Sleep(5 * time.Millisecond)
+
+		if _, err := strconv.Atoi(port); err != nil {
+			fmt.Printf("Error %s is not a usable port", port)
+			continue
+		}
+
 		addr := ip + ":" + port
 		go connect(*protocol, addr)
 	}
@@ -49,4 +61,5 @@ func connect(protocol, addr string) {
 	if err == nil {
 		log.Printf("Connected on %s\n", addr)
 	}
+	return
 }
