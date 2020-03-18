@@ -1,9 +1,9 @@
 @echo off
 
-#Forza la stile di scrittura del codice
+rem Forza lo stile di scrittura del codice su tutto il progetto.
 gofmt -w .\
 
-set ver=v0.2.7
+set ver=v0.2.8
 
 set GOOS=openbsd
 go build -ldflags="-n -s -X 'main.Version=%ver%'" -o ..\eseguibili\goscanner-openbsd
