@@ -8,9 +8,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"goscanner"
 	"os"
-	"sync"
 )
 
 // Version of the app will be updated via -ldflags at build time.
@@ -18,42 +16,34 @@ var Version = "Development"
 
 func main() {
 
+	// ctx è il contesto padre da passare a ogni goroutine.
 	ctx, cancel := context.WithCancel(context.Background())
+
+	// cancel chiude ogni processo pendente a fine funzione.
 	defer cancel()
 
-	var v = flag.Bool("v", false, "shows version")
-	var protocol = flag.String("p", "tcp", "ip protocol to use")
-	var timeout = flag.Int("t", 1, "timeout in seconds for single portcheck")
+	// v è un flag booleano per richiedere la versione attuale di goscanner.
+	var v = flag.Bool("v", false, "mostra la versione attuale di goscanner")
 
+	// protocol è un flag per selezionare il protocollo di connessione da usare.
+	var protocol = flag.String("p", "tcp", "protocollo ip da usare per la connessione")
+
+	// timeout è il tempo massimo in secondi per verificare l'apertura della porta
+	// sull'host.
+	var timeout = flag.Int("t", 1, "timeout in secondi per ogni verifica")
+
+	// Parsa i flag.
 	flag.Parse()
 
+	// Se viene richiesta la versione di goscanner la mostra a video ed esce.
 	if *v {
 		fmt.Printf("goscanner version: %s\n", Version)
 		fmt.Printf("Author: %s\n", "Alberto Bregliano")
 		os.Exit(0)
 	}
 
+	// arguments è la lista di valori che seguono i flags.
 	arguments := flag.Args()
-	ip := arguments[0]
-	ports := arguments[1:]
 
-	var wg sync.WaitGroup
-	wg.Add(len(ports))
-
-	for _, port := range ports {
-		var r goscanner.CheckRequest
-		r = goscanner.CheckRequest{
-			Protocol: *protocol,
-			Host:     ip,
-			Port:     port,
-			Timeout:  *timeout,
-		}
-
-		go func() {
-			defer wg.Done()
-			goscanner.CheckPortCtx(ctx, r)
-		}()
-	}
-
-	wg.Wait()
+	VerificheParalleleCtx(ctx, arguments, *protocol, *timeout)
 }
