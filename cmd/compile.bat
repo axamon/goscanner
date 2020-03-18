@@ -1,4 +1,4 @@
-@echo off
+rem @echo off
 
 rem Forza lo stile di scrittura del codice su tutto il progetto.
 gofmt -w .\
