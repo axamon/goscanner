@@ -8,16 +8,16 @@ rem Se ci sono problemi esce senza proseguire con la build.
 go test -v -cover -o goscannerTest.exe || goto exit
 
 set GOOS=openbsd
-go build .\cmd -ldflags="-n -s -X 'main.Version=%ver%'" -o eseguibili\goscanner-openbsd
+go build -ldflags="-n -s -X 'main.Version=%ver%'" -o .\eseguibili\goscanner-openbsd .\cmd 
 
 set GOOS=linux
-go build .\cmd -ldflags="-n -s -X 'main.Version=%ver%'" -o eseguibili\goscanner-linux
+go build -ldflags="-n -s -X 'main.Version=%ver%'" -o .\eseguibili\goscanner-linux .\cmd 
 
 set GOOS=darwin
-go build .\cmd -ldflags="-n -s -X 'main.Version=%ver%'" -o eseguibili\goscannermac
+go build -ldflags="-n -s -X 'main.Version=%ver%'" -o .\eseguibili\goscannermac .\cmd 
 
 set GOOS=windows
-go build .\cmd -ldflags="-n -s -X 'main.Version=%ver%'" -o eseguibili\goscanner.exe
+go build -ldflags="-n -s -X 'main.Version=%ver%'" -o .\eseguibili\goscanner.exe .\cmd 
 
 git checkout -b %ver%
 git add .
