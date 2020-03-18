@@ -1,4 +1,8 @@
 @echo off
+
+#Forza la stile di scrittura del codice
+gofmt -w .\
+
 set ver=v0.2.7
 
 set GOOS=openbsd
