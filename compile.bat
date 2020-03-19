@@ -1,4 +1,4 @@
-set ver=v0.2.11
+set ver=v0.3.0
 
 rem Forza lo stile di scrittura del codice su tutto il progetto.
 gofmt -w .\

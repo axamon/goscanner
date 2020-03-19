@@ -7,6 +7,7 @@ package goscanner_test
 
 import (
 	"context"
+	"fmt"
 	"goscanner"
 	"log"
 	"net"
@@ -39,7 +40,7 @@ func TestCheckPortCtx(t *testing.T) {
 		args    args
 		wantErr bool
 	}{
-		{"one port", args{context.TODO(), goscanner.CheckRequest{Protocol: "tcp", Host: "localhost", Port: "8080", Timeout: 2}}, false},
+		{"one port", args{context.TODO(), goscanner.CheckRequest{Protocol: "tcp", Host: "localhost", Port: "8080", Timeout: 2}}, true},
 		{"not a port", args{context.TODO(), goscanner.CheckRequest{Protocol: "tcp", Host: "localhost", Port: "notaport", Timeout: 2}}, true},
 		{"open port", args{context.TODO(), goscanner.CheckRequest{Protocol: "tcp", Host: "localhost", Port: "1123", Timeout: 2}}, false},
 	}
@@ -50,4 +51,31 @@ func TestCheckPortCtx(t *testing.T) {
 			}
 		})
 	}
+}
+
+// ExampleCheckPortCtx è un esempio di utilizzo del package goscanner.
+func ExampleCheckPortCtx() {
+
+	ctx := context.TODO()
+
+	openPort := goscanner.CheckRequest{
+		Protocol: "tcp",
+		Host:     "127.0.0.1",
+		Port:     "1123",
+	}
+
+	closedPort := goscanner.CheckRequest{
+		Protocol: "tcp",
+		Host:     "127.0.0.1",
+		Port:     "1124",
+	}
+
+	err1 := goscanner.CheckPortCtx(ctx, openPort)
+	err2 := goscanner.CheckPortCtx(ctx, closedPort)
+
+	fmt.Println(err1)
+	fmt.Println(err2)
+	// Output:
+	// <nil>
+	// porta 1124 chiusa
 }

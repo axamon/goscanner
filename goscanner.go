@@ -38,10 +38,12 @@ func CheckPortCtx(ctx context.Context, r CheckRequest) error {
 	// Avvia la connessione per testare se la porta è aperta o meno.
 	_, err := net.DialTimeout(r.Protocol, addr, time.Duration(r.Timeout)*time.Second)
 
-	// Se non ci sono errori restituisce un log con la data di test.
-	if err == nil {
-		log.Printf("Connesso con successo su: %s, porta aperta: %s \n", addr, r.Port)
+	if err != nil {
+		return fmt.Errorf("porta %s chiusa", r.Port)
 	}
+
+	// Se non ci sono errori restituisce un log con la data di test.
+	log.Printf("Connesso con successo su: %s, porta aperta: %s \n", addr, r.Port)
 
 	return nil
 }
