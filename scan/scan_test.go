@@ -78,3 +78,4 @@ func ExampleCheckPortCtx() {
 	// <nil>
 	// porta 1124 chiusa
 }
+
