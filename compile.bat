@@ -5,7 +5,7 @@ gofmt -w .\
 
 rem Crea eseguibile di test e lo lancia per test funzionali e verifica della coverage.
 rem Se ci sono problemi esce senza proseguire con la build.
-go test -v -cover -o goscannerTest.exe || goto exit
+go test -v .\... -cover -o goscannerTest.exe || goto exit
 
 set GOOS=openbsd
 go build -ldflags="-n -s -X 'main.Version=%ver%'" -o .\eseguibili\goscanner-openbsd

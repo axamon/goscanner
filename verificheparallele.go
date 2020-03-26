@@ -5,10 +5,9 @@
 package main
 
 import (
-	"goscanner/scan"
 	"context"
+	"goscanner/scan"
 	"sync"
-	
 )
 
 // VerificheParalleleCtx esegue le verifiche delle porte in parallelo.

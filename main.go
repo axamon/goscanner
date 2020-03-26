@@ -45,11 +45,13 @@ func main() {
 	// arguments è la lista di valori che seguono i flags.
 	arguments := flag.Args()
 
+	// Se non vengono passati paramtri riepiloga la sintassi.
 	if len(arguments) < 1 {
 		fmt.Println("Nessun parametro passato")
 		fmt.Println("Sintassi: goscanner <ip> <porte ...>")
 		os.Exit(1)
 	}
 
+	// 	VerificheParalleleCtx esegue i controlli delle porte in parallelo.
 	VerificheParalleleCtx(ctx, arguments, *protocol, *timeout)
 }
