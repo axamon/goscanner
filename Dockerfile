@@ -1,3 +1,4 @@
 FROM scratch
-ADD eseguibili/goscanner-linux /main
-CMD ["/main"]
+ADD main /main
+ENTRYPOINT ["/main"]
+CMD ["127.0.0.1","8080"]
