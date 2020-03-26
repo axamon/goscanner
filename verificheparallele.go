@@ -5,8 +5,8 @@
 package main
 
 import (
-	"context"
 	"goscanner/scan"
+	"context"
 	"sync"
 	
 )
