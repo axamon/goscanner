@@ -12,9 +12,9 @@ all: test build
 build: 
 	$(GOBUILD) -o $(BINARY_NAME) -v
 test: 
-	$(GOTEST) -v -cover ./scan
+	$(GOTEST) -v -cover ./...
 test-file:
-	$(GOTEST) -v -cover ./scan -o testscan
+	$(GOTEST) -v -cover -o test
 profile: test-file
 	./testscan --test.v --test.cpuprofile profili/cpu.pprof
 	$(GOCMD) tool pprof --pdf eseguibili/goscanner-linux profili/cpu.pprof > profili/cpu.pdf
