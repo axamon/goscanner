@@ -1,3 +1,4 @@
+APPNAME=goscanner
 # Go parameters
 GOCMD=go
 GOBUILD=$(GOCMD) build
@@ -17,11 +18,11 @@ test-file:
 profile: test-file
 	./testscan --test.v --test.cpuprofile profili/cpu.pprof
 	$(GOCMD) tool pprof --pdf eseguibili/goscanner-linux profili/cpu.pprof > profili/cpu.pdf
-dockerimage:
+dockerimage: test
 	CGO_ENABLED=0 $(GOBUILD) -ldflags="-w -s" -a -installsuffix cgo -o main
-	podman build -t goscanner/latest -f Dockerfile
-run-docker: dockerimage
-	podman run --rm -it --name makefile-goscanner goscanner/latest www.openbsd.org 443
+	podman build -t $(APPNAME):latest -f Dockerfile
+dockerrun:
+	podman run --rm -it --name $(APPNAME) $(APPNAME):latest www.openbsd.org 443
 
 clean: 
 	$(GOCLEAN)
